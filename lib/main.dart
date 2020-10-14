@@ -60,7 +60,10 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[_form(), _list()],
+          children: <Widget>[
+            _form(),
+            _list(),
+          ],
         ),
       ),
       resizeToAvoidBottomPadding: false,
@@ -165,11 +168,8 @@ class _MyHomePageState extends State<MyHomePage> {
                             size: 20.0,
                           ),
                           splashColor: Colors.red[200],
-                          onPressed: () async {
-                            _databaseHelper.deleteMember(_memberList[index].id);
-                            print("deleted");
-                            _resetForm();
-                            _refreshMemberList();
+                          onPressed: () {
+                            _showDeleteDialog(context, _memberList[index].id);
                           },
                         ),
                       ],
@@ -205,14 +205,6 @@ class _MyHomePageState extends State<MyHomePage> {
   _refreshMemberList() async {
     List<Member> x = await _databaseHelper.fetchMembers();
     setState(() {
-      print("memberlist updated");
-      x.forEach((element) {
-        print(element.id.toString() +
-            " " +
-            element.name +
-            " " +
-            element.phone_no.toString());
-      });
       _memberList = x;
     });
   }
@@ -226,5 +218,40 @@ class _MyHomePageState extends State<MyHomePage> {
       _controlPhone.clear();
       _member.id = null;
     });
+  }
+
+  _showDeleteDialog(BuildContext context, int id) {
+    Widget cancelButton = FlatButton(
+      child: Text("Cancel"),
+      onPressed: () {
+        Navigator.of(context).pop(); // dismiss dialog
+      },
+    );
+
+    Widget continueButton = FlatButton(
+      child: Text("Yes, Delete"),
+      onPressed: () async {
+        _databaseHelper.deleteMember(id);
+        _resetForm();
+        _refreshMemberList();
+        Navigator.of(context).pop();
+      },
+    );
+
+    AlertDialog alert = AlertDialog(
+      title: Text("AlertDialog"),
+      content: Text("Would you like to delete this member?"),
+      actions: [
+        cancelButton,
+        continueButton,
+      ],
+    );
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
   }
 }
