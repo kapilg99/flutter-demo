@@ -1,3 +1,3 @@
-# flutter_crud
+# Flutter SQLite CRUD
 
-Flutter with SQLite CRUD operations 
+Basic Flutter application with SQLite CRUD operations 
