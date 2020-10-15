@@ -239,7 +239,7 @@ class _MyHomePageState extends State<MyHomePage> {
     );
 
     AlertDialog alert = AlertDialog(
-      title: Text("AlertDialog"),
+      title: Text("Confirm Deletion"),
       content: Text("Would you like to delete this member?"),
       actions: [
         cancelButton,
