@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_crud/models/member.dart';
 import 'package:flutter_crud/utils/database_helper.dart';
 
+import 'currency_converter.dart';
+
 void main() {
   runApp(MyApp());
 }
@@ -65,6 +67,15 @@ class _MyHomePageState extends State<MyHomePage> {
             _list(),
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.monetization_on),
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => CurrencyConverter()),
+          );
+        },
       ),
       resizeToAvoidBottomPadding: false,
     );
